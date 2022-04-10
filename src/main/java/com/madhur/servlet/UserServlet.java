@@ -117,8 +117,8 @@ public class UserServlet extends HttpServlet {
 				userDTO.setPassword(request.getParameter("signUpPswd1"));
 				userDTO.setFirstName(request.getParameter("firstName"));
 				userDTO.setLastName(request.getParameter("lastName"));
-				userDTO.setEmailId(request.getParameter("mobileNumber"));
-				userDTO.setMobileNumber(request.getParameter("emailId"));
+				userDTO.setMobileNumber(request.getParameter("mobileNumber"));
+				userDTO.setEmailId(request.getParameter("emailId"));
 				int count = new UserServices().insert(userDTO);
 
 				if (count > 0) {
