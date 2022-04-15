@@ -162,7 +162,7 @@
 			<tr>
 				<th>Password</th>
 				<td><input type="password" name="password"
-					value="<%=editUserDTO.getPassword()%>"></td>
+					value="<%=editUserDTO.getPassword()%>" disabled="disabled"></td>
 			</tr>
 				<th>First Name</th>
 				<td><input type="text" name="firstName"

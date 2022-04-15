@@ -2,6 +2,8 @@ package com.madhur.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -111,10 +113,18 @@ public class UserServlet extends HttpServlet {
 			UserDTO userDTO = new UserDTO();
 			String Pswd = request.getParameter("signUpPswd1");
 			String confrimPswd = request.getParameter("signUpPswd2");
-			
+
 			if (Pswd.equals(confrimPswd)) {
 				userDTO.setUsername(request.getParameter("signUpUsername"));
-				userDTO.setPassword(request.getParameter("signUpPswd1"));
+
+				MessageDigest md = null;
+				String password = request.getParameter("signUpPswd1");
+
+				md = MessageDigest.getInstance("MD5");
+				byte[] digest = md.digest(password.getBytes(StandardCharsets.UTF_8));
+				String s = new String(digest);
+
+				userDTO.setPassword(s);
 				userDTO.setFirstName(request.getParameter("firstName"));
 				userDTO.setLastName(request.getParameter("lastName"));
 				userDTO.setMobileNumber(request.getParameter("mobileNumber"));
@@ -133,12 +143,12 @@ public class UserServlet extends HttpServlet {
 
 			else {
 				printWriter.write("<html><body onload='myFunction()'>");
-				printWriter.write("<script>function myFunction() {alert('Confrim Password is not amtch with Password');}</script>");
+				printWriter.write(
+						"<script>function myFunction() {alert('Confrim Password is not amtch with Password');}</script>");
 				printWriter.write("</body></html>");
 				request.getRequestDispatcher("signup.jsp").include(request, response);
 			}
 
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
